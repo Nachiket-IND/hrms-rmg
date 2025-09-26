@@ -8,8 +8,8 @@ pipeline {
     }
 
     tools {
-        maven 'M3'
-        nodejs 'nodejs'
+        maven 'M3'       // Ensure this matches Maven config in Jenkins
+        nodejs 'nodejs'  // Ensure this matches NodeJS config in Jenkins
     }
 
     stages {
@@ -38,31 +38,32 @@ pipeline {
 
         stage('Build Docker Images') {
             steps {
-                sh 'docker build -t hrms-backend ./backend'
-                sh 'docker build -t hrms-frontend ./frontend'
+                sh "docker build -t hrms-backend ./backend"
+                sh "docker build -t hrms-frontend ./frontend"
             }
         }
 
         stage('Tag & Push to Docker Hub') {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
-                    sh '''
+                    sh """
                         echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
 
-                        docker tag hrms-backend:latest $DOCKER_USER/hrms-backend:latest
-                        docker push $DOCKER_USER/hrms-backend:latest
+                        docker tag hrms-backend:latest $BACKEND_IMAGE
+                        docker push $BACKEND_IMAGE
 
-                        docker tag hrms-frontend:latest $DOCKER_USER/hrms-frontend:latest
-                        docker push $DOCKER_USER/hrms-frontend:latest
+                        docker tag hrms-frontend:latest $FRONTEND_IMAGE
+                        docker push $FRONTEND_IMAGE
 
                         docker logout
-                    '''
+                    """
                 }
             }
         }
 
         stage('Deploy using Docker Compose') {
             steps {
+                echo "Deploying updated containers with Docker Compose..."
                 sh '''
                     docker-compose down
                     docker-compose pull
@@ -77,7 +78,7 @@ pipeline {
             echo "✅ CI/CD pipeline completed successfully."
         }
         failure {
-            echo "❌ Pipeline failed. Check logs in Jenkins."
+            echo "❌ Pipeline failed. Please check Jenkins logs for details."
         }
     }
 }
