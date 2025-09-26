@@ -8,8 +8,8 @@ pipeline {
     }
 
     tools {
-        maven 'M3'       // Ensure this matches Maven config in Jenkins
-        nodejs 'nodejs'  // Ensure this matches NodeJS config in Jenkins
+        maven 'M3'
+        nodejs 'nodejs'
     }
 
     stages {
@@ -38,8 +38,8 @@ pipeline {
 
         stage('Build Docker Images') {
             steps {
-                sh "docker build -t hrms-backend ./backend"
-                sh "docker build -t hrms-frontend ./frontend"
+                sh 'docker build -t hrms-backend ./backend'
+                sh 'docker build -t hrms-frontend ./frontend'
             }
         }
 
@@ -63,11 +63,10 @@ pipeline {
 
         stage('Deploy using Docker Compose') {
             steps {
-                echo "Deploying updated containers with Docker Compose..."
                 sh '''
-                    docker-compose down
+                    docker-compose down --remove-orphans
                     docker-compose pull
-                    docker-compose up -d --build
+                    docker-compose up -d
                 '''
             }
         }
