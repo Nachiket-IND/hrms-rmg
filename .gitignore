@@ -1,17 +1,5 @@
-# NodeJS / Angular
-node_modules/
-dist/
-.env
-
-# Java / Maven
-target/
-*.log
-
-# System Files
-.DS_Store
-.idea/
-.vscode/
-*.iml
-
-# Docker files
-docker-compose.override.yaml
+minikube-linux-amd64
+minikube-linux-amd64
+minikube-linux-amd64
+minikube-linux-amd64
+minikube-linux-amd64
