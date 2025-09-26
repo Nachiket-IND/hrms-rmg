@@ -1,6 +1,7 @@
 <div class="form-container">
   <h2>User Authentication Form</h2>
   <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+
     <div class="form-group">
       <label for="userId">User ID (UUID)</label>
       <input type="text" id="userId" formControlName="userId" placeholder="Auto-generated or enter UUID manually" />
@@ -10,7 +11,7 @@
       <label for="username">Username</label>
       <input type="text" id="username" formControlName="username" />
       <div *ngIf="userForm.get('username')?.touched && userForm.get('username')?.invalid">
-        Username is required.
+        <small class="error">Username is required.</small>
       </div>
     </div>
 
@@ -18,15 +19,15 @@
       <label for="email">Email</label>
       <input type="email" id="email" formControlName="email" />
       <div *ngIf="userForm.get('email')?.touched && userForm.get('email')?.invalid">
-        Enter a valid email.
+        <small class="error">Enter a valid email.</small>
       </div>
     </div>
 
     <div class="form-group">
-      <label for="password">Password (Hashed)</label>
-      <input type="password" id="password" formControlName="password" placeholder="Enter password" />
+      <label for="password">Password</label>
+      <input type="password" id="password" formControlName="password" />
       <div *ngIf="userForm.get('password')?.touched && userForm.get('password')?.invalid">
-        Password is required.
+        <small class="error">Password is required and must be at least 6 characters.</small>
       </div>
     </div>
 
@@ -41,7 +42,7 @@
         <option value="FINANCE">FINANCE</option>
       </select>
       <div *ngIf="userForm.get('role')?.touched && userForm.get('role')?.invalid">
-        Role is required.
+        <small class="error">Role is required.</small>
       </div>
     </div>
 
@@ -53,7 +54,7 @@
         <option value="Inactive">Inactive</option>
       </select>
       <div *ngIf="userForm.get('status')?.touched && userForm.get('status')?.invalid">
-        Status is required.
+        <small class="error">Status is required.</small>
       </div>
     </div>
 

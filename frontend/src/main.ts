@@ -10,9 +10,8 @@ import { routes } from './app/app.routes';
 
 bootstrapApplication(AppComponent, {
   providers: [
-    provideHttpClient(withFetch()),
+    provideHttpClient(withFetch()), // ✅ Only once
     provideRouter(routes),
-    provideHttpClient(withFetch()),
     importProvidersFrom(
       BrowserAnimationsModule,
       ToastModule
