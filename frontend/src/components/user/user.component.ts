@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { UserService } from 'src/app/services/user.service';
+import { UserService } from '../../app/services/user.service';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -13,7 +13,10 @@ import { CommonModule } from '@angular/common';
 export class UserComponent {
   userForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private userService: UserService) {
+  constructor(
+    private fb: FormBuilder,
+    private userService: UserService
+  ) {
     this.userForm = this.fb.group({
       userId: [''],
       username: ['', Validators.required],
@@ -27,11 +30,11 @@ export class UserComponent {
     });
   }
 
-  onSubmit() {
+  onSubmit(): void {
     if (this.userForm.valid) {
       this.userService.createUser(this.userForm.value).subscribe({
-        next: (res) => console.log('User created successfully:', res),
-        error: (err) => console.error('Error creating user:', err)
+        next: (res: any) => console.log('User created successfully:', res),
+        error: (err: any) => console.error('Error creating user:', err)
       });
     } else {
       this.userForm.markAllAsTouched();
