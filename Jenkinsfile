@@ -8,8 +8,8 @@ pipeline {
     }
 
     tools {
-        maven 'Maven' // Correct Maven tool name from Jenkins Global Tools
-        // nodejs 'nodejs' // Remove or configure NodeJS plugin if needed
+        maven 'M3'
+        nodejs 'nodejs'
     }
 
     stages {
@@ -81,4 +81,3 @@ pipeline {
         }
     }
 }
-
